@@ -1,0 +1,68 @@
+version: "1"
+services:
+  server:
+    container_name: server
+    image: server
+    restart: always
+    build: .
+    networks: 
+      - network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      SERVICES: "${SERVICES}"
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    tty: true
+    networks: 
+      - network
+  
+  update_data:
+    container_name: update_data
+    image: update_data
+    build: ./server/updateData/
+    networks: 
+      - network
+    depends_on:
+      - rabbitmq
+      - mongo
+    environment:
+      SERVICES: "${SERVICES}"
+      SERVICES_METADATA: "${SERVICES_METADATA}"
+      UPDATE_DATA_QUEUE_NAME: "${UPDATE_DATA_QUEUE_NAME}"
+      UPDATE_DATA_INTERVAL: "${UPDATE_DATA_INTERVAL}"
+      MAX_UPDATE_DAYS: "${MAX_UPDATE_DAYS}"
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+    networks:
+      - network
+
+  job_manager:
+    container_name: job_manager
+    build: ./server/jobManager/
+    image: job_manager
+    depends_on:
+    - rabbitmq
+    - mongo
+    networks:
+      - network
+    environment:
+      SERVICES: "${SERVICES}"
+      TASKS_PAGGING_UPDATE_DATA: "${TASKS_PAGGING_UPDATE_DATA}"
+      UPDATE_DATA_QUEUE_NAME: "${UPDATE_DATA_QUEUE_NAME}"
+      JOB_MANAGER_INTERVAL: "${JOB_MANAGER_INTERVAL}"
+      MAX_UPDATE_DAYS: "${MAX_UPDATE_DAYS}"
+      
+networks:
+  network: 
+    driver: bridge
