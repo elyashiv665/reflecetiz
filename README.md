@@ -36,7 +36,7 @@ Architecture:
     
 Scale-up
 
-            load balance: since I work in localhost environment I didn't implement that.In the cloud I would
+            since I work in localhost environment I didn't implement load balancer.In the cloud I would
             use API gateway.
             Also I can scale the update data docker containers according the queue state
             and I can scale the server according to load.
