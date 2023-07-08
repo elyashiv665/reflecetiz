@@ -118,35 +118,6 @@ app.get('/domains/:url', async (req: Request, res: Response) => {
     }
 });
 
-
-app.get('/domains', async (req: Request, res: Response) => {
-
-    try {
-        const domains = await Domain.find({});
-        res.send(domains)
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error while querying domain' });
-    }
-});
-
-
-app.delete('/domains', async (req: Request, res: Response) => {
-
-  try {
-      const domains = await Domain.deleteMany({});
-      res.send(domains)
-
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Error while querying domain' });
-  }
-});
-
-
-
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

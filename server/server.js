@@ -176,46 +176,6 @@ app.get('/domains/:url', function (req, res) { return __awaiter(void 0, void 0, 
         }
     });
 }); });
-app.get('/domains', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var domains, err_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, models_1["default"].find({})];
-            case 1:
-                domains = _a.sent();
-                res.send(domains);
-                return [3 /*break*/, 3];
-            case 2:
-                err_3 = _a.sent();
-                console.error(err_3);
-                res.status(500).json({ message: 'Error while querying domain' });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
-app["delete"]('/domains', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var domains, err_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, models_1["default"].deleteMany({})];
-            case 1:
-                domains = _a.sent();
-                res.send(domains);
-                return [3 /*break*/, 3];
-            case 2:
-                err_4 = _a.sent();
-                console.error(err_4);
-                res.status(500).json({ message: 'Error while querying domain' });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
 app.listen(port, function () {
     console.log("Server is running on port ".concat(port));
 });

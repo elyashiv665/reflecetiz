@@ -130,8 +130,5 @@ async function pickupTask(){
   
 };
 
+setInterval(pickupTask, parseInt(process.env.UPDATE_DATA_INTERVAL)); 
 
-setInterval(pickupTask, 15000); 
-// setInterval(pickupTask, parseInt(process.env.UPDATE_DATA_INTERVAL)); 
-
-// pickupTask()

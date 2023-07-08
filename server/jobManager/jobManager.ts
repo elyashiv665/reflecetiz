@@ -100,10 +100,7 @@ async function handler(){
       console.error('Error:', error);
     }
 }
-setInterval(handler, 15000); 
-
-// setInterval(handler, parseInt(process.env.JOB_MANAGER_INTERVAL)); 
-// handler() 
+setInterval(handler, parseInt(process.env.JOB_MANAGER_INTERVAL)); 
 
 
 

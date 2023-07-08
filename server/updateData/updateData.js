@@ -242,6 +242,4 @@ function pickupTask() {
     });
 }
 ;
-setInterval(pickupTask, 15000);
-// setInterval(pickupTask, parseInt(process.env.UPDATE_DATA_INTERVAL)); 
-// pickupTask()
+setInterval(pickupTask, parseInt(process.env.UPDATE_DATA_INTERVAL));
