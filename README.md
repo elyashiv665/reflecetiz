@@ -12,8 +12,6 @@ architecture:
     -jobManager: lookup for domains that currently needs an update and queue tasks accordingly; run every day(configurable)
     -updateData: consume tasks from the queue; run twice a day(configurable)
     Additionally I have also specified a mongo docker and rabbitmq docker in the docker-compose.
-
-
     In the db I chose to save the desired data is a json that maps services(whoIs, virusTotal) to their responses.
     I save the last update time in a json that maps services(whoIs, virusTotal) to update time in unix time.
     I use an index on lastUpdate so that the job manager can look up for expired domains efficiently.
@@ -26,6 +24,7 @@ architecture:
     the data every 30 days(or so), the current approach should not generate to much overhead.
 
     Scheduling: I used js interval, other approaches would be to use cron or lambda if in a cloud environment.
+    
 
 Scale-up
     load balance: since I work in localhost environment I didn't implement that.In the cloud I would use API gateway.
