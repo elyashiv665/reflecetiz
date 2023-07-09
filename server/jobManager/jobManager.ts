@@ -44,12 +44,7 @@ async function publishUpdateData(channel: amqp.Channel, updateDataQueueName: str
   const unixTime = Math.floor(Date.now());
   let index = 0;
   for(const service of services){
-    const query = {
-      $or: [
-        { [`lastUpdated.${service}`]: 0 },
-        {  [`lastUpdated.${service}`]: { $gt: unixTime - parseFloat(process.env.MAX_UPDATE_DAYS) } }
-      ]
-    };
+    const query = {  [`lastUpdated.${service}`]: { $lt: unixTime - parseFloat(process.env.MAX_UPDATE_DAYS) } };
 
     let domainsToUpdate: any[]= [];
     let tasks: any[] = [];

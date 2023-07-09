@@ -107,35 +107,30 @@ function publishToQueue(channel, queueName, message) {
 function publishUpdateData(channel, updateDataQueueName) {
     return __awaiter(this, void 0, void 0, function () {
         var services, unixTime, index, _i, services_1, service, query, domainsToUpdate, tasks, err_2, packageDomains, i, task, promises;
-        var _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     services = JSON.parse(process.env.SERVICES);
                     unixTime = Math.floor(Date.now());
                     index = 0;
                     _i = 0, services_1 = services;
-                    _c.label = 1;
+                    _b.label = 1;
                 case 1:
                     if (!(_i < services_1.length)) return [3 /*break*/, 8];
                     service = services_1[_i];
-                    query = {
-                        $or: [
-                            (_a = {}, _a["lastUpdated.".concat(service)] = 0, _a),
-                            (_b = {}, _b["lastUpdated.".concat(service)] = { $gt: unixTime - parseFloat(process.env.MAX_UPDATE_DAYS) }, _b)
-                        ]
-                    };
+                    query = (_a = {}, _a["lastUpdated.".concat(service)] = { $lt: unixTime - parseFloat(process.env.MAX_UPDATE_DAYS) }, _a);
                     domainsToUpdate = [];
                     tasks = [];
-                    _c.label = 2;
+                    _b.label = 2;
                 case 2:
-                    _c.trys.push([2, 4, , 5]);
+                    _b.trys.push([2, 4, , 5]);
                     return [4 /*yield*/, models_js_1["default"].find(query, { _id: 1 })];
                 case 3:
-                    domainsToUpdate = _c.sent();
+                    domainsToUpdate = _b.sent();
                     return [3 /*break*/, 5];
                 case 4:
-                    err_2 = _c.sent();
+                    err_2 = _b.sent();
                     console.error('failed to query domains. ', err_2);
                     return [2 /*return*/];
                 case 5:
@@ -158,9 +153,9 @@ function publishUpdateData(channel, updateDataQueueName) {
                     promises = tasks.map(function (task) { return publishToQueue(channel, updateDataQueueName, JSON.stringify(task)); });
                     return [4 /*yield*/, Promise.all(promises)];
                 case 6:
-                    _c.sent();
+                    _b.sent();
                     index++;
-                    _c.label = 7;
+                    _b.label = 7;
                 case 7:
                     _i++;
                     return [3 /*break*/, 1];
